@@ -1,0 +1,58 @@
+{
+    "serial": {
+        "port": "/dev/ttyACM0",
+        "baud": 1000000,
+        "axis_count": 3,
+        "scale_factor": 0.0000195
+    },
+    "processing": {
+        "sample_rate": 4000,
+        "batch_size": 80000,
+        "stride_size": 40000,
+        "anomaly_sensitivity": 3,
+        "alpha" : 0.9995
+    },
+    "plot": {
+        "raw_window": 5000,
+        "visual_boost" : 1500.0,
+        "downsampling": 2,
+        "mse_step": 15,
+        "feature_history": 50,
+        "score_history": 60,
+        "update_interval": 0.01,
+        "raw_y_limit": [-3000, 3000],
+        "channel_offsets": [400, 0, -400],
+        "feature_names": [
+            "ch1_RMS", "ch1_Kurtosis", "ch1_CrestFactor",
+            "ch1_Std", "ch1_PeakToPeak", "ch1_ShapeFactor",
+            "ch2_RMS", "ch2_Kurtosis", "ch2_CrestFactor",
+            "ch2_Std", "ch2_PeakToPeak", "ch2_ShapeFactor",
+            "ch3_RMS", "ch3_Kurtosis", "ch3_CrestFactor",
+            "ch3_Std", "ch3_PeakToPeak", "ch3_ShapeFactor"
+        ]
+    },
+    "model": {
+        "ae_threshold": 5,
+        "ae_scaler_path": "../models/scalers/ae_scaler.pkl",
+        "autoencoder_path": "../models/autoencoder_model.keras",
+        "rf_scaler_path": "../models/scalers/rf_scaler.pkl",
+        "random_forest_path": "../models/rf_classifier.joblib",
+        "fault_library": [
+            {"id": 0, "label": "Normal", "color": "#15803D"},
+            {"id": 1, "label": "Engine has paused", "color": "#CA8A04"},
+            {"id": 2, "label": "Belt has stretched", "color": "#581C87"}
+        ]
+    },
+    "ui": {
+        "colors": {
+            "normal": "#15803D",
+            "warning": "#FFFF00", 
+            "abnormal": "#991B1B",
+            "idle": "lightgrey"
+        },
+        "raw_colors": ["#B91C1C", "#D97706", "#1D4ED8"],
+        "raw_labels": ["X","Y","Z"],
+        "logo_path": "../config/logo.png",
+        "log_path": "../logs/vibration_logger.log"
+    }
+}
