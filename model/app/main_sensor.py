@@ -38,7 +38,8 @@ from core.pred_service import AIService
 from core.processor import DataProcessor
 from ui.sensor_dashboard import Dashboard
 from core.feature_calc import FeatureCalculator
-from core.serial_handler import SerialHandler
+# from core.serial_handler import SerialHandler
+from ui.bin_source import BinSource  
 
 
 class App:
@@ -53,7 +54,7 @@ class App:
         self.ai.load_models()
         self.gpu_calc = FeatureCalculator(self.config)
         self.processor = DataProcessor(self.config, self.state, self.data, self.ai, self.gpu_calc)
-        self.data_source = SerialHandler(self.config, self.state, self.processor)
+        self.data_source = BinSource(self.config, self.state, self.processor)
 
         # Qt Application
         self.qapp = QApplication(sys.argv)

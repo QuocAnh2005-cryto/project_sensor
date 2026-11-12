@@ -264,9 +264,11 @@ class Dashboard(QMainWindow):
         body_layout.setSpacing(8)
 
         # Left column: vibration + MSE chart
+
         left_col = QVBoxLayout()
         left_col.setSpacing(8)
         left_col.addWidget(self._build_vibration_card(), stretch=2)
+        left_col.addWidget(self._build_mse_card(), stretch=1)   
         body_layout.addLayout(left_col, stretch=3)
         body_layout.addWidget(self._build_right_panel(), stretch=1)
 
@@ -293,21 +295,6 @@ class Dashboard(QMainWindow):
         h = QHBoxLayout(bar)
         h.setContentsMargins(16, 0, 16, 0)
         h.setSpacing(14)
-
-        # # Logo
-        # logo_lbl = QLabel()
-        # logo_path_abs = os.path.abspath(
-        #     os.path.join(os.path.dirname(__file__), "..", "..", "config", "logo.png")
-        # )
-        # if not os.path.exists(logo_path_abs):
-        #     logo_path_abs = os.path.abspath(
-        #         os.path.join(os.path.dirname(__file__), self.logo_path)
-        #     )
-        # if os.path.exists(logo_path_abs):
-        #     pix = QPixmap(logo_path_abs)
-        #     logo_lbl.setPixmap(pix.scaled(240, 58, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        # logo_lbl.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
-        # h.addWidget(logo_lbl)
 
         # Vertical divider
         vline = QFrame()
@@ -520,6 +507,31 @@ class Dashboard(QMainWindow):
         pl.addWidget(self.status_frame)
 
         pl.addWidget(_make_divider())
+
+
+        # ── Info rows: Fault / Confidence / Threshold ─────────────────────────
+        # Fault row is built specially so we can blink it on Abnormal
+        self.fault_row_frame = QFrame()
+        self.fault_row_frame.setObjectName("info_row")
+        fault_h = QHBoxLayout(self.fault_row_frame)
+        fault_h.setContentsMargins(10, 8, 10, 8)
+        fault_lbl = QLabel("🛡  Fault Type:")
+        fault_lbl.setObjectName("info_label")
+        self.lbl_fault_val = QLabel("None")
+        self.lbl_fault_val.setObjectName("info_value_normal")
+        self.lbl_fault_val.setStyleSheet(
+            "color: #15803D; font-weight: 700; font-size: 11pt; background: transparent;"
+        )
+        fault_h.addWidget(fault_lbl)
+        fault_h.addStretch()
+        fault_h.addWidget(self.lbl_fault_val)
+        pl.addWidget(self.fault_row_frame)
+
+        self.lbl_conf_val  = self._make_info_row(pl, "🎯  Confidence:", "–%",  "#15803D")
+        self.lbl_thr_val   = self._make_info_row(pl, "⚡  Threshold:", str(self.ae_threshold), "#1E293B")
+
+        pl.addWidget(_make_divider())
+        
 
         # ── Buttons ───────────────────────────────────────────────────────────
         btn_row = QHBoxLayout()
@@ -922,7 +934,7 @@ class Dashboard(QMainWindow):
             if self.isFullScreen():
                 self.showNormal()
             else:
-                self.showFullScreen()
+                self.showFullScreen()   
 
     def changeEvent(self, event):
         from PyQt5.QtCore import QEvent
