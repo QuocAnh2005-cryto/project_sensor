@@ -15,7 +15,6 @@ class BinSource:
         self.config = config
         self.state = state
         self.processor = processor
-
         self.scale = config.get("serial", {}).get("scale_factor", 0.0000195)
         cfg = config.get("bin_source", {})
         self.bin_dir = cfg.get("dir", ".")
