@@ -340,7 +340,7 @@ def load_fault_list(path, base_dt, total_samples, src="danh_sach", before=None, 
                 s_off = 0
             if e_off > file_sec:
                 warns.append(f"dòng {ln} ({label}) vượt quá cuối file, đã cắt bớt")
-                e_off = file_sec*
+                e_off = file_sec
             regions.append({"s": int(s_off * SAMPLE_RATE), "e": int(e_off * SAMPLE_RATE),
                             "src": src, "score": 0.0})
     return merge_regions(regions), warns
