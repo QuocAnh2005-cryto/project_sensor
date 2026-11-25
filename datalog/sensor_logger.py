@@ -138,7 +138,6 @@ def ai_processor_thread(stop_event):
             if len(input_buffer) >= 50:
                 # result = model.predict(input_buffer)
                 input_buffer = []
-
             CLEAN_QUEUE_AI.task_done()
         except queue.Empty:
             continue

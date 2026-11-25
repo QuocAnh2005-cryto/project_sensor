@@ -1,7 +1,3 @@
-"""
-main.py – Entry point for Predictive Maintenance Application
-Stack: PyQt5 + pyqtgraph + QSS  (matplotlib removed)
-"""
 import os
 os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
